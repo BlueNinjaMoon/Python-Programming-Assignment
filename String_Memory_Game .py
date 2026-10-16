@@ -69,6 +69,7 @@ while playagain == "Y":
     if gameresult[0] == False:
         print(f"Correct string: {randstr}")
         print(f"Your answer: {gameresult[1]}")
+        max += 1
         if lvl > 0 or lvl <= 2:
             print(f"Wow, did you understand the game?")
         else:
@@ -81,4 +82,5 @@ while playagain == "Y":
     else:
         lvl += 1
         print(f"You made it to Round {lvl}.")
+        lvl = 0
         playagain = play_again()
