@@ -1,5 +1,6 @@
 import time
 import msvcrt
+import os
 
 def generate_random_str(maxstring:int) -> str:
     """
@@ -16,17 +17,20 @@ def game(lvl:int, rand:str):
     guess = input("Enter the string you just saw (Case Insensitive): ").strip().upper()
     if check_win(guess, rand) == True:
         print("Next round!")
+        gameresult.append(True)
     else:
         print("Game over.")
-    
+        gameresult.append(False)
+        gameresult.append(guess)    
 
 def print_game(lvl:int, string:str):
     print(f"Level {lvl}, the string is {string}.")
     tim = str("ABCDE")
-    for i in tim:
+    for i in range(5):
         time.sleep(1)
-        print("•",end=" ")
+        print("•",end=" ",flush=True)
     clear_keyboard_buffer()
+    os.system("cls")
 
 def check_win(guess:str, correct:str):
     if guess == correct:
@@ -42,11 +46,37 @@ def clear_keyboard_buffer():
     while msvcrt.kbhit():
         msvcrt.getwch()
 
+def play_again():
+    user = input("Would you like to play again? (Y/y or N/n): ").strip().upper()
+    while True:
+        if user == "Y":
+            return "Y"
+        elif user == "N":
+            return "N"
+        else:
+            while user != "Y" or "N":
+                print("Incorrect input, must be Y/y or N/n.")
+                user = input("Would you like to play again? (Y/y or N/n): ").strip().upper()
+        
 max = 4
 lvl = 0
-#while True:
-randstr = generate_random_str(max)
-print_game(lvl, randstr)
-game(lvl, randstr)
+playagain = "Y"
+while playagain == "Y":
+    gameresult = []
+    randstr = generate_random_str(max)
+    print_game(lvl, randstr)
+    game(lvl, randstr)
+    if gameresult[0] == False:
+        print(f"Correct string: {randstr}")
+        print(f"Your answer: {gameresult[1]}")
+        if lvl > 0:
+            print(f"You made it through Round {lvl-1}.")
+        else:
+            print(f"You made it to Round {lvl}.")
+        playagain = play_again()
+    else:
+        lvl += 1
+        print(f"You made it to Round {lvl}.")
+        playagain = play_again()
 
 #user = userguess("")
