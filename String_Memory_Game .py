@@ -69,14 +69,16 @@ while playagain == "Y":
     if gameresult[0] == False:
         print(f"Correct string: {randstr}")
         print(f"Your answer: {gameresult[1]}")
-        if lvl > 0:
-            print(f"You made it through Round {lvl-1}.")
+        if lvl > 0 or lvl <= 2:
+            print(f"Wow, did you understand the game?")
         else:
-            print(f"You made it to Round {lvl}.")
+            if lvl >= 3 or lvl <= 6:
+                print(f"Not bad, keep working at it")
+            else:
+                if lvl >= 7:
+                    print("Nice Job! You're a memory master!")
         playagain = play_again()
     else:
         lvl += 1
         print(f"You made it to Round {lvl}.")
         playagain = play_again()
-
-#user = userguess("")
